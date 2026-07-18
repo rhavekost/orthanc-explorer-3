@@ -1,0 +1,9 @@
+SCRATCH=$(mktemp -d)
+trap 'rm -rf "$SCRATCH"' EXIT
+cp -a ./. "$SCRATCH"/
+cd "$SCRATCH"
+npm install --no-audit --no-fund
+npm run lint
+npx tsc --noEmit
+npm run test
+npm run build
