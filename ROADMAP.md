@@ -26,19 +26,6 @@ that larger surface.
 
 ## Now
 
-- [ ] **Remove the stale `eslint-disable` comment in `src/features/viewer/components/CornerstoneViewport.tsx:128`.**
-   `npm run lint` reports it explicitly: `Unused eslint-disable directive (no problems were
-   reported from 'react-hooks/exhaustive-deps')`. Deleting the one comment line is a pure lint
-   fix with zero behavior change — the directive was already inert.
-  <!-- roadmap-id: 30f237fb -->
-
-- [ ] **Add `src/lib/dicom-validation.test.ts` for `src/lib/dicom-validation.ts` (58 lines, 0% coverage, no test file exists).**
-   Pure functions, no React/DOM mocking beyond a `File` object: `hasDicomMagicBytes` (checks the
-   128-byte DICOM preamble + `DICM` magic bytes) and `isKnownNonDicom` (filename-based pre-filter
-   for OS metadata files, `thumbs.db`, and a fixed set of known non-DICOM extensions). Follow the
-   pattern in `src/lib/dicom-tag-utils.test.ts` (colocated, no mocks needed).
-  <!-- roadmap-id: e447466c -->
-
 - [ ] **Add `src/shared/api/errors.test.ts` for `src/shared/api/errors.ts` (51 lines, 0% coverage, no test file exists).**
    `ApiError` and its four subclasses (`NetworkError`, `AuthError`, `NotFoundError`, `DicomError`)
    plus the `isApiError` type guard — pure class/constructor logic, no external dependencies.
@@ -100,3 +87,22 @@ that larger surface.
     cover the store's own action logic independent of the hooks that currently provide its only
     indirect coverage.
   <!-- roadmap-id: 861e75d5 -->
+
+## Completed
+
+<!-- completed: 2026-07-19 -->
+- [x] **Remove the stale `eslint-disable` comment in `src/features/viewer/components/CornerstoneViewport.tsx:128`.**
+   `npm run lint` reports it explicitly: `Unused eslint-disable directive (no problems were
+   reported from 'react-hooks/exhaustive-deps')`. Deleting the one comment line is a pure lint
+   fix with zero behavior change — the directive was already inert.
+  <!-- roadmap-id: 30f237fb -->
+
+
+<!-- completed: 2026-07-19 -->
+- [x] **Add `src/lib/dicom-validation.test.ts` for `src/lib/dicom-validation.ts` (58 lines, 0% coverage, no test file exists).**
+   Pure functions, no React/DOM mocking beyond a `File` object: `hasDicomMagicBytes` (checks the
+   128-byte DICOM preamble + `DICM` magic bytes) and `isKnownNonDicom` (filename-based pre-filter
+   for OS metadata files, `thumbs.db`, and a fixed set of known non-DICOM extensions). Follow the
+   pattern in `src/lib/dicom-tag-utils.test.ts` (colocated, no mocks needed).
+  <!-- roadmap-id: e447466c -->
+
