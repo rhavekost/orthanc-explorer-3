@@ -26,12 +26,6 @@ that larger surface.
 
 ## Now
 
-- [ ] **Add `src/shared/api/errors.test.ts` for `src/shared/api/errors.ts` (51 lines, 0% coverage, no test file exists).**
-   `ApiError` and its four subclasses (`NetworkError`, `AuthError`, `NotFoundError`, `DicomError`)
-   plus the `isApiError` type guard — pure class/constructor logic, no external dependencies.
-   Follow the pattern in `src/lib/errors.test.ts`.
-  <!-- roadmap-id: 4e9dbbf8 -->
-
 - [ ] **Add `src/store/ui-store.ts` tests (31 lines, 0% coverage, no test file exists).**
    Zustand store with `theme`/`sidebarCollapsed` state and two actions. Follow
    `src/store/sessionStore.test.ts`'s pattern exactly (`beforeEach` resets state via `setState`,
@@ -171,6 +165,14 @@ that larger surface.
   <!-- roadmap-id: d4b21d3d -->
 
 ## Completed
+
+<!-- completed: 2026-07-19 -->
+- [x] **Add `src/shared/api/errors.test.ts` for `src/shared/api/errors.ts` (51 lines, 0% coverage, no test file exists).**
+   `ApiError` and its four subclasses (`NetworkError`, `AuthError`, `NotFoundError`, `DicomError`)
+   plus the `isApiError` type guard — pure class/constructor logic, no external dependencies.
+   Follow the pattern in `src/lib/errors.test.ts`.
+  <!-- roadmap-id: 4e9dbbf8 -->
+
 
 <!-- completed: 2026-07-19 -->
 - [x] **Remove the stale `eslint-disable` comment in `src/features/viewer/components/CornerstoneViewport.tsx:128`.**
