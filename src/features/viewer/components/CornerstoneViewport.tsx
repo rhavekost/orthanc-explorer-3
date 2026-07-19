@@ -125,7 +125,6 @@ export function CornerstoneViewport({
       }
       // Do NOT call setEngineReady here — component is unmounting, state is discarded
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [toolGroupId]);
 
   // Load/update stack whenever imageIds change.
