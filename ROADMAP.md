@@ -73,44 +73,52 @@ that larger surface.
    `onSuccess`/cache-invalidation logic. Follow `src/features/settings/hooks/use-modalities.test.tsx`'s
    `renderHook` + `QueryClientProvider` wrapper pattern, mocking `echoModalityAction` (already covered at
    the action layer by `src/actions/echoModality.test.ts`) rather than the underlying API.
+  <!-- roadmap-id: e492c50d -->
 
 - [ ] **Add `src/features/settings/hooks/use-modality-config.test.ts` for `src/features/settings/hooks/use-modality-config.ts` (10 lines, 0% coverage, no test file exists).**
    A `useQuery` wrapper around `modalitiesApi.get`, gated by the `enabled: !!name` guard. Follow
    `src/features/settings/hooks/use-modalities.test.tsx`'s pattern exactly — same `renderHook` +
    `QueryClientProvider` wrapper, mock `modalitiesApi.get` via `vi.spyOn`.
+  <!-- roadmap-id: 55f5c133 -->
 
 - [ ] **Add `src/features/settings/hooks/use-delete-modality.test.ts` for `src/features/settings/hooks/use-delete-modality.ts` (13 lines, 0% coverage, no test file exists).**
    A `useMutation` wrapper around `deleteModalityAction` (already tested at the action layer by
    `src/actions/deleteModality.test.ts`) whose own untested logic is the `onSuccess` cache-invalidation —
    it calls `queryClient.invalidateQueries(["modalities"])` and `removeQueries(["modality", name])`. Mock
    the action, assert on a shared `QueryClient` instance's cache methods.
+  <!-- roadmap-id: 32405a92 -->
 
 - [ ] **Add `src/features/settings/hooks/use-save-modality.test.ts` for `src/features/settings/hooks/use-save-modality.ts` (20 lines, 0% coverage, no test file exists).**
    A `useMutation` wrapper around `saveModalityAction` (already tested at the action layer by
    `src/actions/saveModality.test.ts`) with two `invalidateQueries` calls in `onSuccess`. Same pattern as
    `use-delete-modality.test.ts` above — mock the action, spy on the `QueryClient` instance.
+  <!-- roadmap-id: 3f411e6f -->
 
 - [ ] **Add `src/shared/utils/format.test.ts` for `src/shared/utils/format.ts` (31 lines, 0% coverage, no test file exists).**
    Four pure formatting functions (`formatPatientName`, `formatDiskSize`, `formatDuration`,
    `formatRelativeTime`) with several unexercised size/duration thresholds each. No React/DOM
    dependencies. Follow the pattern in `src/lib/dicom-tag-utils.test.ts` (colocated, no mocks needed).
+  <!-- roadmap-id: 4ee5992f -->
 
 - [ ] **Add `src/shared/api/repository-factory.test.ts` for `src/shared/api/repository-factory.ts` (26 lines, 0% coverage, no test file exists).**
    `RepositoryFactory.createStudyRepository()` (memoizes a singleton) and `setUseDemoData()` (resets the
    singleton so the next call re-creates it). Mock `OrthancStudyRepository` and `DemoStudyRepository`
    constructors via `vi.mock` so the test exercises only the factory's own branching, not the repositories'
    internals. Follow `src/lib/errors.test.ts`'s pure-class-logic pattern.
+  <!-- roadmap-id: 06d6a52f -->
 
 - [ ] **Add `src/shared/hooks/use-tab-label.test.tsx` for `src/shared/hooks/use-tab-label.ts` (20 lines, 0% coverage, no test file exists).**
    Updates a tab's label in `src/store/tab-store.ts` when the current route matches an open tab.
    `renderHook` with a `MemoryRouter` wrapper (needed for `useLocation`), seed `useTabStore`'s state
    directly via `setState` (same store-seeding approach as `src/store/sessionStore.test.ts`), and assert
    `updateTabLabel` is called only when the label actually changes.
+  <!-- roadmap-id: 8e1aca7e -->
 
 - [ ] **Add `src/hooks/use-mobile.test.tsx` for `src/hooks/use-mobile.tsx` (19 lines, 0% coverage, no test file exists).**
    Reads `window.matchMedia` and listens for viewport-width changes. `renderHook`, stub
    `window.matchMedia` (jsdom does not implement it) with a minimal mock exposing `addEventListener`/
    `removeEventListener`, and assert the boolean flips at the 768px breakpoint.
+  <!-- roadmap-id: d7667e32 -->
 
 ## Later
 
@@ -136,12 +144,14 @@ that larger surface.
    The live 404 page (wired up in `src/App.tsx`'s catch-all route) — render-and-assert on the heading
    text and the "Return to Home" link. Note: `src/app/router/NotFound.tsx` is a byte-for-byte duplicate
    that is never imported anywhere; this item targets only the file actually reachable from the app.
+  <!-- roadmap-id: e4c508d9 -->
 
 - [ ] **Add `src/features/audit/hooks/use-audit-log.test.ts` for `src/features/audit/hooks/use-audit-log.ts` (38 lines, 0% coverage, no test file exists).**
    Wraps `useAuditStore`'s `log` action with fixed metadata (actor, IP, truncated user agent).
    `renderHook` and mock/spy on `useAuditStore` (same store-mocking approach as
    `src/features/tasks/hooks/use-anonymize-job.test.ts` uses for `useJobStore`), asserting the shape
    passed to `log()` including the default `severity: 'info'`.
+  <!-- roadmap-id: 5e8adfaf -->
 
 - [ ] **Add `src/app/providers/error-boundary.test.tsx` for `src/app/providers/error-boundary.tsx` (73 lines, 0% coverage, no test file exists).**
    The app's top-level error boundary — `getDerivedStateFromError` sets error state, `render()` shows
@@ -150,6 +160,7 @@ that larger surface.
    a non-throwing child is rendered next. `@testing-library/react` render + `userEvent`, standard React
    error-boundary test pattern (a `console.error` spy will be needed to silence React's expected
    boundary logging).
+  <!-- roadmap-id: 263d76ee -->
 
 - [ ] **Add `src/components/ErrorBoundary.test.tsx` for `src/components/ErrorBoundary.tsx` (55 lines, 0% coverage, no test file exists).**
    A second, distinct error boundary used elsewhere in the tree — branches on whether the caught error
@@ -157,6 +168,7 @@ that larger surface.
    `src/lib/logger.ts`. Same throwing-child + fallback-assertion pattern as the `error-boundary.tsx`
    item above; this file's own branch (the `instanceof OrthancError` check) is the file-specific case
    to cover.
+  <!-- roadmap-id: d4b21d3d -->
 
 ## Completed
 
