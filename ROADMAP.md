@@ -12,7 +12,9 @@ that larger surface.
 
 ## Constraints
 
-- Hardening and coverage only. No new features, routes, or behavior changes.
+- Feature work and behavior changes are in scope (updated 2026-07-20) — this
+  board is no longer restricted to a coverage-only hardening pass. Keep each item
+  narrowly scoped to what its own text describes.
 - No changes to authentication (`src/app/providers/auth-context.tsx`), DICOM data
   parsing/handling correctness, or anything that could affect clinical data integrity — this is a
   DICOM/healthcare-adjacent admin UI; those areas are explicitly out of scope for this pass.
@@ -26,18 +28,55 @@ that larger surface.
 
 ## Now
 
-- [ ] **Add `src/features/activity/store/activity-ui-store.ts` tests (12 lines, 0% coverage, no test file exists).**
-   Smallest untested store in the repo — a single `pendingSelectId` field and setter. Same
-   `sessionStore.test.ts` pattern; a 2-3 test file is sufficient.
-  <!-- roadmap-id: 60b100dc -->
+- [ ] **Fix the job-store split-brain and remove the duplicate.**
+   `src/app/providers/task-context.tsx:8` imports `@/features/tasks/store/job-store`
+   while every other consumer imports `@/store/job-store`, and BOTH call
+   `create(persist(...))` under the identical localStorage key `'orthanc-job-store'`
+   (`src/store/job-store.ts:66` and `src/features/tasks/store/job-store.ts:65`) —
+   two zustand instances sharing one key. `TaskProvider` mounts in
+   `AppProviders.tsx:35` so both instantiate, but `useTask()`/`useTaskById()` have
+   zero consumers, so jobs added via the main store are invisible to the
+   task-context copy. Repoint `task-context.tsx` to `@/store/job-store` and delete
+   the duplicate `src/features/tasks/store/job-store.ts`. (First verify the
+   importer/consumer claims against `dev` — the premise is that the `features/tasks`
+   copy is dead.)
+
+- [ ] **Add `src/store/audit-store.test.ts` for the LIVE `src/store/audit-store.ts` (0% direct coverage).**
+   Imported by `src/features/audit/hooks/use-audit-log.ts:2`,
+   `src/features/activity/pages/ActivityPage.tsx:49`, and
+   `src/features/studies/components/StudyActivityLog.tsx:8`; `log()` generates ids
+   of shape `audit-live-<n>` (`:20`), `clear()` empties `events`. The pre-existing
+   audit-store test targets the unimported `src/features/audit/store/audit-store.ts`
+   copy, so the live store has no real coverage. Follow `src/store/sessionStore.test.ts`.
+
+- [ ] **Add `src/store/activity-ui-store.test.ts` for the LIVE `src/store/activity-ui-store.ts` (0% direct coverage).**
+   Imported by `src/app/layout/JobStatusBar.tsx:25` and
+   `src/features/activity/pages/ActivityPage.tsx:53`; single `pendingSelectId` field
+   + `setPendingSelectId` setter (`:10-13`). The existing
+   `src/features/activity/store/activity-ui-store.test.ts` covers the unimported
+   duplicate, not this. Same `sessionStore.test.ts` pattern, 2-3 tests.
+
+- [ ] **Add `src/store/job-store.test.ts` for the LIVE `src/store/job-store.ts` (no direct test file).**
+   Imported by 7 modules (`JobStatusBar.tsx:23`, `ModifyStudyDialog.tsx:16`,
+   `use-anonymize-job.ts:4`, `UploadPage.tsx:25`, `ActivityPage.tsx:48`,
+   `upload-store.ts:9`) and only exercised indirectly today. Untested own logic:
+   `retryJob` (`:46-60`), `clearCompleted`, `activeJobs`/`hasActiveJobs` selectors,
+   and the `onRehydrateStorage` handler that flips `running`/`pending` →
+   `interrupted` (`:70-77`). Follow `src/store/upload-store.test.ts`.
+
+- [ ] **Remove the dead, unimported `src/features/audit/store/audit-store.ts` and its test.**
+   `git grep` finds zero non-self importers of `features/audit/store/audit-store`;
+   it is a near-byte-for-byte copy of the live `src/store/audit-store.ts` (differs
+   only by a PHI-classification comment header). Pure dead-code deletion.
+   - Delete the source file and its now-orphaned `audit-store.test.ts` as one
+     atomic unit (the test cannot survive its source's removal).
+
+- [ ] **Remove the dead, unimported `src/features/activity/store/activity-ui-store.ts` and its test.**
+   Zero non-self importers; duplicate of live `src/store/activity-ui-store.ts`
+   differing only by the PHI header comment. Pure dead-code deletion.
+   - Delete the source file and its orphaned `activity-ui-store.test.ts` together.
 
 ## Next
-
-- [ ] **Add `src/features/audit/store/audit-store.ts` tests (26 lines, 0% coverage, no test file exists).**
-   `log()` (prepends an event with a generated id/timestamp) and `clear()`. Same zustand-store
-   test pattern as items 4-5; only wrinkle is asserting the generated `id` has the
-   `audit-live-<n>` shape rather than a literal value.
-  <!-- roadmap-id: 2aa24b83 -->
 
 - [ ] **Add `src/store/tab-store.ts` tests (128 lines, 0% coverage, no test file exists).**
    Largest untested store in the repo. Follow `src/store/upload-store.test.ts`'s pattern (already
@@ -121,12 +160,6 @@ that larger surface.
     path. Low effort, follows any existing component-test pattern in `src/shared/components/`
     (e.g. `HealthBanner.test.tsx`'s render-and-assert style).
   <!-- roadmap-id: 4c4d5a88 -->
-
-- [ ] **Add `src/features/tasks/store/job-store.ts` a direct unit test file (currently 65.95% statements / 44.44% functions, only indirectly exercised via `useJobs.test.tsx`/`use-anonymize-job.test.ts`).**
-    Lines 47-60 and 71-73 are uncovered. A direct store test (same pattern as items 4-7) would
-    cover the store's own action logic independent of the hooks that currently provide its only
-    indirect coverage.
-  <!-- roadmap-id: 861e75d5 -->
 
 - [ ] **Add `src/pages/NotFound.test.tsx` for `src/pages/NotFound.tsx` (24 lines, 0% coverage, no test file exists).**
    The live 404 page (wired up in `src/App.tsx`'s catch-all route) — render-and-assert on the heading
