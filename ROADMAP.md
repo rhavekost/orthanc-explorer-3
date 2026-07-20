@@ -26,12 +26,6 @@ that larger surface.
 
 ## Now
 
-- [ ] **Add `src/store/ui-store.ts` tests (31 lines, 0% coverage, no test file exists).**
-   Zustand store with `theme`/`sidebarCollapsed` state and two actions. Follow
-   `src/store/sessionStore.test.ts`'s pattern exactly (`beforeEach` resets state via `setState`,
-   assertions read back via `getState()`).
-  <!-- roadmap-id: 6695806f -->
-
 - [ ] **Add `src/features/activity/store/activity-ui-store.ts` tests (12 lines, 0% coverage, no test file exists).**
    Smallest untested store in the repo — a single `pendingSelectId` field and setter. Same
    `sessionStore.test.ts` pattern; a 2-3 test file is sufficient.
@@ -165,6 +159,14 @@ that larger surface.
   <!-- roadmap-id: d4b21d3d -->
 
 ## Completed
+
+<!-- completed: 2026-07-20 -->
+- [x] **Add `src/store/ui-store.ts` tests (31 lines, 0% coverage, no test file exists).**
+   Zustand store with `theme`/`sidebarCollapsed` state and two actions. Follow
+   `src/store/sessionStore.test.ts`'s pattern exactly (`beforeEach` resets state via `setState`,
+   assertions read back via `getState()`).
+  <!-- roadmap-id: 6695806f -->
+
 
 <!-- completed: 2026-07-19 -->
 - [x] **Add `src/shared/api/errors.test.ts` for `src/shared/api/errors.ts` (51 lines, 0% coverage, no test file exists).**
