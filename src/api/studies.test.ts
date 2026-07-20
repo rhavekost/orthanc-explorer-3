@@ -76,4 +76,24 @@ describe("studiesApi", () => {
     // Verify it returns a blob-like object
     expect(result).toBeDefined();
   });
+
+  it("addLabel() PUTs /studies/:id/labels/:label (label encoded)", async () => {
+    const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(
+      new Response(null, { status: 200 }),
+    );
+    await studiesApi.addLabel("abc-123", "high priority");
+    const [url, init] = fetchMock.mock.calls[0];
+    expect(url).toBe("/studies/abc-123/labels/high%20priority");
+    expect((init as RequestInit).method).toBe("PUT");
+  });
+
+  it("removeLabel() DELETEs /studies/:id/labels/:label (label encoded)", async () => {
+    const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(
+      new Response(null, { status: 200 }),
+    );
+    await studiesApi.removeLabel("abc-123", "high priority");
+    const [url, init] = fetchMock.mock.calls[0];
+    expect(url).toBe("/studies/abc-123/labels/high%20priority");
+    expect((init as RequestInit).method).toBe("DELETE");
+  });
 });
