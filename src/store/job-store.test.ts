@@ -1,5 +1,5 @@
 // src/store/job-store.test.ts
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { useJobStore } from './job-store';
 import type { Job } from '@/shared/types/job';
 
@@ -104,5 +104,45 @@ describe('activeJobs() / hasActiveJobs()', () => {
     useJobStore.getState().addJob(makeJob({ id: 'i', status: 'interrupted' }));
 
     expect(useJobStore.getState().hasActiveJobs()).toBe(false);
+  });
+});
+
+const fullJob = (overrides: Partial<Job> = {}): Job => ({
+  id: 'job-1',
+  type: 'upload',
+  label: 'a.dcm',
+  progress: 0,
+  status: 'pending',
+  createdAt: 1,
+  updatedAt: 1,
+  ...overrides,
+});
+
+describe('onRehydrateStorage()', () => {
+  afterEach(() => {
+    localStorage.clear();
+  });
+
+  it('flips running and pending jobs to interrupted on rehydration, leaving others', async () => {
+    const seeded: Job[] = [
+      fullJob({ id: 'run', status: 'running' }),
+      fullJob({ id: 'pend', status: 'pending' }),
+      fullJob({ id: 'done', status: 'complete' }),
+      fullJob({ id: 'err', status: 'error' }),
+      fullJob({ id: 'intr', status: 'interrupted' }),
+    ];
+    localStorage.setItem(
+      'orthanc-job-store',
+      JSON.stringify({ state: { jobs: seeded }, version: 0 }),
+    );
+
+    await useJobStore.persist.rehydrate();
+
+    const byId = Object.fromEntries(useJobStore.getState().jobs.map((j) => [j.id, j.status]));
+    expect(byId.run).toBe('interrupted');
+    expect(byId.pend).toBe('interrupted');
+    expect(byId.done).toBe('complete');
+    expect(byId.err).toBe('error');
+    expect(byId.intr).toBe('interrupted');
   });
 });
