@@ -28,18 +28,7 @@ that larger surface.
 
 ## Now
 
-- [ ] **Remove the dead, unimported `src/features/activity/store/activity-ui-store.ts` and its test.**
-   Zero non-self importers; duplicate of live `src/store/activity-ui-store.ts`
-   differing only by the PHI header comment. Pure dead-code deletion.
-   - Delete the source file and its orphaned `activity-ui-store.test.ts` together.
-  <!-- roadmap-id: a767c06c -->
-
 ## Next
-
-- [ ] **Add `src/store/tab-store.ts` tests (128 lines, 0% coverage, no test file exists).**
-   Largest untested store in the repo. Follow `src/store/upload-store.test.ts`'s pattern (already
-   at 86.36% — the closest existing precedent for a multi-action store test file in this repo).
-  <!-- roadmap-id: f0046c66 -->
 
 - [ ] **Extend `src/features/settings/components/ModalitiesTab.test.tsx` (currently 55 lines) to raise coverage of the already-tested component.**
    Currently 79.74% statements / 33.33% functions, with lines 139-247 and 318-319 uncovered.
@@ -144,6 +133,21 @@ that larger surface.
   <!-- roadmap-id: d4b21d3d -->
 
 ## Completed
+
+<!-- completed: 2026-07-21 -->
+- [x] **Remove the dead, unimported `src/features/activity/store/activity-ui-store.ts` and its test.**
+   Zero non-self importers; duplicate of live `src/store/activity-ui-store.ts`
+   differing only by the PHI header comment. Pure dead-code deletion.
+   - Delete the source file and its orphaned `activity-ui-store.test.ts` together.
+  <!-- roadmap-id: a767c06c -->
+
+
+<!-- completed: 2026-07-21 -->
+- [x] **Add `src/store/tab-store.ts` tests (128 lines, 0% coverage, no test file exists).**
+   Largest untested store in the repo. Follow `src/store/upload-store.test.ts`'s pattern (already
+   at 86.36% — the closest existing precedent for a multi-action store test file in this repo).
+  <!-- roadmap-id: f0046c66 -->
+
 
 <!-- completed: 2026-07-21 -->
 - [x] **Extend `src/api/studies.test.ts` (currently 79 lines) to cover the untested branches in `src/api/studies.ts`.**
