@@ -40,6 +40,7 @@ that larger surface.
    the duplicate `src/features/tasks/store/job-store.ts`. (First verify the
    importer/consumer claims against `dev` — the premise is that the `features/tasks`
    copy is dead.)
+  <!-- roadmap-id: 761a68a9 -->
 
 - [ ] **Add `src/store/audit-store.test.ts` for the LIVE `src/store/audit-store.ts` (0% direct coverage).**
    Imported by `src/features/audit/hooks/use-audit-log.ts:2`,
@@ -48,6 +49,7 @@ that larger surface.
    of shape `audit-live-<n>` (`:20`), `clear()` empties `events`. The pre-existing
    audit-store test targets the unimported `src/features/audit/store/audit-store.ts`
    copy, so the live store has no real coverage. Follow `src/store/sessionStore.test.ts`.
+  <!-- roadmap-id: e1c94079 -->
 
 - [ ] **Add `src/store/activity-ui-store.test.ts` for the LIVE `src/store/activity-ui-store.ts` (0% direct coverage).**
    Imported by `src/app/layout/JobStatusBar.tsx:25` and
@@ -55,6 +57,7 @@ that larger surface.
    + `setPendingSelectId` setter (`:10-13`). The existing
    `src/features/activity/store/activity-ui-store.test.ts` covers the unimported
    duplicate, not this. Same `sessionStore.test.ts` pattern, 2-3 tests.
+  <!-- roadmap-id: 9d511e1d -->
 
 - [ ] **Add `src/store/job-store.test.ts` for the LIVE `src/store/job-store.ts` (no direct test file).**
    Imported by 7 modules (`JobStatusBar.tsx:23`, `ModifyStudyDialog.tsx:16`,
@@ -63,6 +66,7 @@ that larger surface.
    `retryJob` (`:46-60`), `clearCompleted`, `activeJobs`/`hasActiveJobs` selectors,
    and the `onRehydrateStorage` handler that flips `running`/`pending` →
    `interrupted` (`:70-77`). Follow `src/store/upload-store.test.ts`.
+  <!-- roadmap-id: 050758bf -->
 
 - [ ] **Remove the dead, unimported `src/features/audit/store/audit-store.ts` and its test.**
    `git grep` finds zero non-self importers of `features/audit/store/audit-store`;
@@ -70,11 +74,13 @@ that larger surface.
    only by a PHI-classification comment header). Pure dead-code deletion.
    - Delete the source file and its now-orphaned `audit-store.test.ts` as one
      atomic unit (the test cannot survive its source's removal).
+  <!-- roadmap-id: 22eefdb6 -->
 
 - [ ] **Remove the dead, unimported `src/features/activity/store/activity-ui-store.ts` and its test.**
    Zero non-self importers; duplicate of live `src/store/activity-ui-store.ts`
    differing only by the PHI header comment. Pure dead-code deletion.
    - Delete the source file and its orphaned `activity-ui-store.test.ts` together.
+  <!-- roadmap-id: a767c06c -->
 
 ## Next
 
