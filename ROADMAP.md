@@ -28,15 +28,6 @@ that larger surface.
 
 ## Now
 
-- [ ] **Add `src/store/job-store.test.ts` for the LIVE `src/store/job-store.ts` (no direct test file).**
-   Imported by 7 modules (`JobStatusBar.tsx:23`, `ModifyStudyDialog.tsx:16`,
-   `use-anonymize-job.ts:4`, `UploadPage.tsx:25`, `ActivityPage.tsx:48`,
-   `upload-store.ts:9`) and only exercised indirectly today. Untested own logic:
-   `retryJob` (`:46-60`), `clearCompleted`, `activeJobs`/`hasActiveJobs` selectors,
-   and the `onRehydrateStorage` handler that flips `running`/`pending` →
-   `interrupted` (`:70-77`). Follow `src/store/upload-store.test.ts`.
-  <!-- roadmap-id: 050758bf -->
-
 - [ ] **Remove the dead, unimported `src/features/audit/store/audit-store.ts` and its test.**
    `git grep` finds zero non-self importers of `features/audit/store/audit-store`;
    it is a near-byte-for-byte copy of the live `src/store/audit-store.ts` (differs
@@ -167,6 +158,17 @@ that larger surface.
   <!-- roadmap-id: d4b21d3d -->
 
 ## Completed
+
+<!-- completed: 2026-07-21 -->
+- [x] **Add `src/store/job-store.test.ts` for the LIVE `src/store/job-store.ts` (no direct test file).**
+   Imported by 7 modules (`JobStatusBar.tsx:23`, `ModifyStudyDialog.tsx:16`,
+   `use-anonymize-job.ts:4`, `UploadPage.tsx:25`, `ActivityPage.tsx:48`,
+   `upload-store.ts:9`) and only exercised indirectly today. Untested own logic:
+   `retryJob` (`:46-60`), `clearCompleted`, `activeJobs`/`hasActiveJobs` selectors,
+   and the `onRehydrateStorage` handler that flips `running`/`pending` →
+   `interrupted` (`:70-77`). Follow `src/store/upload-store.test.ts`.
+  <!-- roadmap-id: 050758bf -->
+
 
 <!-- completed: 2026-07-21 -->
 - [x] **Add `src/store/activity-ui-store.test.ts` for the LIVE `src/store/activity-ui-store.ts` (0% direct coverage).**
