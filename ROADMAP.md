@@ -28,14 +28,6 @@ that larger surface.
 
 ## Now
 
-- [ ] **Remove the dead, unimported `src/features/audit/store/audit-store.ts` and its test.**
-   `git grep` finds zero non-self importers of `features/audit/store/audit-store`;
-   it is a near-byte-for-byte copy of the live `src/store/audit-store.ts` (differs
-   only by a PHI-classification comment header). Pure dead-code deletion.
-   - Delete the source file and its now-orphaned `audit-store.test.ts` as one
-     atomic unit (the test cannot survive its source's removal).
-  <!-- roadmap-id: 22eefdb6 -->
-
 - [ ] **Remove the dead, unimported `src/features/activity/store/activity-ui-store.ts` and its test.**
    Zero non-self importers; duplicate of live `src/store/activity-ui-store.ts`
    differing only by the PHI header comment. Pure dead-code deletion.
@@ -158,6 +150,16 @@ that larger surface.
   <!-- roadmap-id: d4b21d3d -->
 
 ## Completed
+
+<!-- completed: 2026-07-21 -->
+- [x] **Remove the dead, unimported `src/features/audit/store/audit-store.ts` and its test.**
+   `git grep` finds zero non-self importers of `features/audit/store/audit-store`;
+   it is a near-byte-for-byte copy of the live `src/store/audit-store.ts` (differs
+   only by a PHI-classification comment header). Pure dead-code deletion.
+   - Delete the source file and its now-orphaned `audit-store.test.ts` as one
+     atomic unit (the test cannot survive its source's removal).
+  <!-- roadmap-id: 22eefdb6 -->
+
 
 <!-- completed: 2026-07-21 -->
 - [x] **Add `src/store/job-store.test.ts` for the LIVE `src/store/job-store.ts` (no direct test file).**
