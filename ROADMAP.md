@@ -28,15 +28,6 @@ that larger surface.
 
 ## Now
 
-- [ ] **Add `src/store/audit-store.test.ts` for the LIVE `src/store/audit-store.ts` (0% direct coverage).**
-   Imported by `src/features/audit/hooks/use-audit-log.ts:2`,
-   `src/features/activity/pages/ActivityPage.tsx:49`, and
-   `src/features/studies/components/StudyActivityLog.tsx:8`; `log()` generates ids
-   of shape `audit-live-<n>` (`:20`), `clear()` empties `events`. The pre-existing
-   audit-store test targets the unimported `src/features/audit/store/audit-store.ts`
-   copy, so the live store has no real coverage. Follow `src/store/sessionStore.test.ts`.
-  <!-- roadmap-id: e1c94079 -->
-
 - [ ] **Add `src/store/activity-ui-store.test.ts` for the LIVE `src/store/activity-ui-store.ts` (0% direct coverage).**
    Imported by `src/app/layout/JobStatusBar.tsx:25` and
    `src/features/activity/pages/ActivityPage.tsx:53`; single `pendingSelectId` field
@@ -184,6 +175,17 @@ that larger surface.
   <!-- roadmap-id: d4b21d3d -->
 
 ## Completed
+
+<!-- completed: 2026-07-21 -->
+- [x] **Add `src/store/audit-store.test.ts` for the LIVE `src/store/audit-store.ts` (0% direct coverage).**
+   Imported by `src/features/audit/hooks/use-audit-log.ts:2`,
+   `src/features/activity/pages/ActivityPage.tsx:49`, and
+   `src/features/studies/components/StudyActivityLog.tsx:8`; `log()` generates ids
+   of shape `audit-live-<n>` (`:20`), `clear()` empties `events`. The pre-existing
+   audit-store test targets the unimported `src/features/audit/store/audit-store.ts`
+   copy, so the live store has no real coverage. Follow `src/store/sessionStore.test.ts`.
+  <!-- roadmap-id: e1c94079 -->
+
 
 <!-- completed: 2026-07-21 -->
 - [x] **Fix the job-store split-brain and remove the duplicate.**
