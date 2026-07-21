@@ -41,12 +41,6 @@ that larger surface.
    at 86.36% — the closest existing precedent for a multi-action store test file in this repo).
   <!-- roadmap-id: f0046c66 -->
 
-- [ ] **Extend `src/api/studies.test.ts` (currently 79 lines) to cover the untested branches in `src/api/studies.ts`.**
-   Coverage report shows 73.91% statements / 66.66% functions, with lines 97-99 and 102-104
-   uncovered — the `addLabel`/`removeLabel` methods have no test coverage at all. Add cases
-   following the existing file's request-mocking pattern for the two missing methods.
-  <!-- roadmap-id: 4123a53d -->
-
 - [ ] **Extend `src/features/settings/components/ModalitiesTab.test.tsx` (currently 55 lines) to raise coverage of the already-tested component.**
    Currently 79.74% statements / 33.33% functions, with lines 139-247 and 318-319 uncovered.
    Add test cases for the currently-unexercised interaction paths in the existing test file,
@@ -150,6 +144,14 @@ that larger surface.
   <!-- roadmap-id: d4b21d3d -->
 
 ## Completed
+
+<!-- completed: 2026-07-21 -->
+- [x] **Extend `src/api/studies.test.ts` (currently 79 lines) to cover the untested branches in `src/api/studies.ts`.**
+   Coverage report shows 73.91% statements / 66.66% functions, with lines 97-99 and 102-104
+   uncovered — the `addLabel`/`removeLabel` methods have no test coverage at all. Add cases
+   following the existing file's request-mocking pattern for the two missing methods.
+  <!-- roadmap-id: 4123a53d -->
+
 
 <!-- completed: 2026-07-21 -->
 - [x] **Remove the dead, unimported `src/features/audit/store/audit-store.ts` and its test.**
