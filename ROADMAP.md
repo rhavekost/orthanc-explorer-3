@@ -36,12 +36,6 @@ that larger surface.
    following its existing `@testing-library/react` render + `userEvent` pattern.
   <!-- roadmap-id: 3533c28e -->
 
-- [ ] **Add `src/features/settings/hooks/use-modality-config.test.ts` for `src/features/settings/hooks/use-modality-config.ts` (10 lines, 0% coverage, no test file exists).**
-   A `useQuery` wrapper around `modalitiesApi.get`, gated by the `enabled: !!name` guard. Follow
-   `src/features/settings/hooks/use-modalities.test.tsx`'s pattern exactly — same `renderHook` +
-   `QueryClientProvider` wrapper, mock `modalitiesApi.get` via `vi.spyOn`.
-  <!-- roadmap-id: 55f5c133 -->
-
 - [ ] **Add `src/features/settings/hooks/use-delete-modality.test.ts` for `src/features/settings/hooks/use-delete-modality.ts` (13 lines, 0% coverage, no test file exists).**
    A `useMutation` wrapper around `deleteModalityAction` (already tested at the action layer by
    `src/actions/deleteModality.test.ts`) whose own untested logic is the `onSuccess` cache-invalidation —
@@ -126,6 +120,14 @@ that larger surface.
   <!-- roadmap-id: d4b21d3d -->
 
 ## Completed
+
+<!-- completed: 2026-07-21 -->
+- [x] **Add `src/features/settings/hooks/use-modality-config.test.ts` for `src/features/settings/hooks/use-modality-config.ts` (10 lines, 0% coverage, no test file exists).**
+   A `useQuery` wrapper around `modalitiesApi.get`, gated by the `enabled: !!name` guard. Follow
+   `src/features/settings/hooks/use-modalities.test.tsx`'s pattern exactly — same `renderHook` +
+   `QueryClientProvider` wrapper, mock `modalitiesApi.get` via `vi.spyOn`.
+  <!-- roadmap-id: 55f5c133 -->
+
 
 <!-- completed: 2026-07-21 -->
 - [x] **Add `src/features/settings/hooks/use-echo-modality.test.ts` for `src/features/settings/hooks/use-echo-modality.ts` (8 lines, 0% coverage, no test file exists).**
