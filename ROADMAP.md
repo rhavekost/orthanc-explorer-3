@@ -36,13 +36,6 @@ that larger surface.
    following its existing `@testing-library/react` render + `userEvent` pattern.
   <!-- roadmap-id: 3533c28e -->
 
-- [ ] **Add `src/features/settings/hooks/use-echo-modality.test.ts` for `src/features/settings/hooks/use-echo-modality.ts` (8 lines, 0% coverage, no test file exists).**
-   Smallest untested hook in the repo — a bare `useMutation` wrapper around `echoModalityAction` with no
-   `onSuccess`/cache-invalidation logic. Follow `src/features/settings/hooks/use-modalities.test.tsx`'s
-   `renderHook` + `QueryClientProvider` wrapper pattern, mocking `echoModalityAction` (already covered at
-   the action layer by `src/actions/echoModality.test.ts`) rather than the underlying API.
-  <!-- roadmap-id: e492c50d -->
-
 - [ ] **Add `src/features/settings/hooks/use-modality-config.test.ts` for `src/features/settings/hooks/use-modality-config.ts` (10 lines, 0% coverage, no test file exists).**
    A `useQuery` wrapper around `modalitiesApi.get`, gated by the `enabled: !!name` guard. Follow
    `src/features/settings/hooks/use-modalities.test.tsx`'s pattern exactly — same `renderHook` +
@@ -133,6 +126,15 @@ that larger surface.
   <!-- roadmap-id: d4b21d3d -->
 
 ## Completed
+
+<!-- completed: 2026-07-21 -->
+- [x] **Add `src/features/settings/hooks/use-echo-modality.test.ts` for `src/features/settings/hooks/use-echo-modality.ts` (8 lines, 0% coverage, no test file exists).**
+   Smallest untested hook in the repo — a bare `useMutation` wrapper around `echoModalityAction` with no
+   `onSuccess`/cache-invalidation logic. Follow `src/features/settings/hooks/use-modalities.test.tsx`'s
+   `renderHook` + `QueryClientProvider` wrapper pattern, mocking `echoModalityAction` (already covered at
+   the action layer by `src/actions/echoModality.test.ts`) rather than the underlying API.
+  <!-- roadmap-id: e492c50d -->
+
 
 <!-- completed: 2026-07-21 -->
 - [x] **Remove the dead, unimported `src/features/activity/store/activity-ui-store.ts` and its test.**
