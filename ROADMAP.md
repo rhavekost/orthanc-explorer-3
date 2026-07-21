@@ -28,14 +28,6 @@ that larger surface.
 
 ## Now
 
-- [ ] **Add `src/store/activity-ui-store.test.ts` for the LIVE `src/store/activity-ui-store.ts` (0% direct coverage).**
-   Imported by `src/app/layout/JobStatusBar.tsx:25` and
-   `src/features/activity/pages/ActivityPage.tsx:53`; single `pendingSelectId` field
-   + `setPendingSelectId` setter (`:10-13`). The existing
-   `src/features/activity/store/activity-ui-store.test.ts` covers the unimported
-   duplicate, not this. Same `sessionStore.test.ts` pattern, 2-3 tests.
-  <!-- roadmap-id: 9d511e1d -->
-
 - [ ] **Add `src/store/job-store.test.ts` for the LIVE `src/store/job-store.ts` (no direct test file).**
    Imported by 7 modules (`JobStatusBar.tsx:23`, `ModifyStudyDialog.tsx:16`,
    `use-anonymize-job.ts:4`, `UploadPage.tsx:25`, `ActivityPage.tsx:48`,
@@ -175,6 +167,16 @@ that larger surface.
   <!-- roadmap-id: d4b21d3d -->
 
 ## Completed
+
+<!-- completed: 2026-07-21 -->
+- [x] **Add `src/store/activity-ui-store.test.ts` for the LIVE `src/store/activity-ui-store.ts` (0% direct coverage).**
+   Imported by `src/app/layout/JobStatusBar.tsx:25` and
+   `src/features/activity/pages/ActivityPage.tsx:53`; single `pendingSelectId` field
+   + `setPendingSelectId` setter (`:10-13`). The existing
+   `src/features/activity/store/activity-ui-store.test.ts` covers the unimported
+   duplicate, not this. Same `sessionStore.test.ts` pattern, 2-3 tests.
+  <!-- roadmap-id: 9d511e1d -->
+
 
 <!-- completed: 2026-07-21 -->
 - [x] **Add `src/store/audit-store.test.ts` for the LIVE `src/store/audit-store.ts` (0% direct coverage).**
