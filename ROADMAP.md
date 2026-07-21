@@ -28,20 +28,6 @@ that larger surface.
 
 ## Now
 
-- [ ] **Fix the job-store split-brain and remove the duplicate.**
-   `src/app/providers/task-context.tsx:8` imports `@/features/tasks/store/job-store`
-   while every other consumer imports `@/store/job-store`, and BOTH call
-   `create(persist(...))` under the identical localStorage key `'orthanc-job-store'`
-   (`src/store/job-store.ts:66` and `src/features/tasks/store/job-store.ts:65`) —
-   two zustand instances sharing one key. `TaskProvider` mounts in
-   `AppProviders.tsx:35` so both instantiate, but `useTask()`/`useTaskById()` have
-   zero consumers, so jobs added via the main store are invisible to the
-   task-context copy. Repoint `task-context.tsx` to `@/store/job-store` and delete
-   the duplicate `src/features/tasks/store/job-store.ts`. (First verify the
-   importer/consumer claims against `dev` — the premise is that the `features/tasks`
-   copy is dead.)
-  <!-- roadmap-id: 761a68a9 -->
-
 - [ ] **Add `src/store/audit-store.test.ts` for the LIVE `src/store/audit-store.ts` (0% direct coverage).**
    Imported by `src/features/audit/hooks/use-audit-log.ts:2`,
    `src/features/activity/pages/ActivityPage.tsx:49`, and
@@ -198,6 +184,22 @@ that larger surface.
   <!-- roadmap-id: d4b21d3d -->
 
 ## Completed
+
+<!-- completed: 2026-07-21 -->
+- [x] **Fix the job-store split-brain and remove the duplicate.**
+   `src/app/providers/task-context.tsx:8` imports `@/features/tasks/store/job-store`
+   while every other consumer imports `@/store/job-store`, and BOTH call
+   `create(persist(...))` under the identical localStorage key `'orthanc-job-store'`
+   (`src/store/job-store.ts:66` and `src/features/tasks/store/job-store.ts:65`) —
+   two zustand instances sharing one key. `TaskProvider` mounts in
+   `AppProviders.tsx:35` so both instantiate, but `useTask()`/`useTaskById()` have
+   zero consumers, so jobs added via the main store are invisible to the
+   task-context copy. Repoint `task-context.tsx` to `@/store/job-store` and delete
+   the duplicate `src/features/tasks/store/job-store.ts`. (First verify the
+   importer/consumer claims against `dev` — the premise is that the `features/tasks`
+   copy is dead.)
+  <!-- roadmap-id: 761a68a9 -->
+
 
 <!-- completed: 2026-07-20 -->
 - [x] **Add `src/store/ui-store.ts` tests (31 lines, 0% coverage, no test file exists).**
