@@ -30,12 +30,6 @@ that larger surface.
 
 ## Next
 
-- [ ] **Add `src/hooks/use-mobile.test.tsx` for `src/hooks/use-mobile.tsx` (19 lines, 0% coverage, no test file exists).**
-   Reads `window.matchMedia` and listens for viewport-width changes. `renderHook`, stub
-   `window.matchMedia` (jsdom does not implement it) with a minimal mock exposing `addEventListener`/
-   `removeEventListener`, and assert the boolean flips at the 768px breakpoint.
-  <!-- roadmap-id: d7667e32 -->
-
 ## Later
 
 - [ ] **Add tests for the two uncovered branches in `src/lib/client.ts` (currently 88.13% statements / 77.27% branches).**
@@ -81,6 +75,14 @@ that larger surface.
   <!-- roadmap-id: d4b21d3d -->
 
 ## Completed
+
+<!-- completed: 2026-07-22 -->
+- [x] **Add `src/hooks/use-mobile.test.tsx` for `src/hooks/use-mobile.tsx` (19 lines, 0% coverage, no test file exists).**
+   Reads `window.matchMedia` and listens for viewport-width changes. `renderHook`, stub
+   `window.matchMedia` (jsdom does not implement it) with a minimal mock exposing `addEventListener`/
+   `removeEventListener`, and assert the boolean flips at the 768px breakpoint.
+  <!-- roadmap-id: d7667e32 -->
+
 
 <!-- completed: 2026-07-22 -->
 - [x] **Add `src/shared/hooks/use-tab-label.test.tsx` for `src/shared/hooks/use-tab-label.ts` (20 lines, 0% coverage, no test file exists).**
