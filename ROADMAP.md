@@ -30,12 +30,6 @@ that larger surface.
 
 ## Next
 
-- [ ] **Add `src/features/settings/hooks/use-save-modality.test.ts` for `src/features/settings/hooks/use-save-modality.ts` (20 lines, 0% coverage, no test file exists).**
-   A `useMutation` wrapper around `saveModalityAction` (already tested at the action layer by
-   `src/actions/saveModality.test.ts`) with two `invalidateQueries` calls in `onSuccess`. Same pattern as
-   `use-delete-modality.test.ts` above — mock the action, spy on the `QueryClient` instance.
-  <!-- roadmap-id: 3f411e6f -->
-
 - [ ] **Add `src/shared/utils/format.test.ts` for `src/shared/utils/format.ts` (31 lines, 0% coverage, no test file exists).**
    Four pure formatting functions (`formatPatientName`, `formatDiskSize`, `formatDuration`,
    `formatRelativeTime`) with several unexercised size/duration thresholds each. No React/DOM
@@ -107,6 +101,14 @@ that larger surface.
   <!-- roadmap-id: d4b21d3d -->
 
 ## Completed
+
+<!-- completed: 2026-07-22 -->
+- [x] **Add `src/features/settings/hooks/use-save-modality.test.ts` for `src/features/settings/hooks/use-save-modality.ts` (20 lines, 0% coverage, no test file exists).**
+   A `useMutation` wrapper around `saveModalityAction` (already tested at the action layer by
+   `src/actions/saveModality.test.ts`) with two `invalidateQueries` calls in `onSuccess`. Same pattern as
+   `use-delete-modality.test.ts` above — mock the action, spy on the `QueryClient` instance.
+  <!-- roadmap-id: 3f411e6f -->
+
 
 <!-- completed: 2026-07-22 -->
 - [x] **Extend `src/features/settings/components/ModalitiesTab.test.tsx` (currently 55 lines) to raise coverage of the already-tested component.**
