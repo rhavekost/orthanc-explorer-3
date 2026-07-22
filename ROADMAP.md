@@ -36,13 +36,6 @@ that larger surface.
    following its existing `@testing-library/react` render + `userEvent` pattern.
   <!-- roadmap-id: 3533c28e -->
 
-- [ ] **Add `src/features/settings/hooks/use-delete-modality.test.ts` for `src/features/settings/hooks/use-delete-modality.ts` (13 lines, 0% coverage, no test file exists).**
-   A `useMutation` wrapper around `deleteModalityAction` (already tested at the action layer by
-   `src/actions/deleteModality.test.ts`) whose own untested logic is the `onSuccess` cache-invalidation —
-   it calls `queryClient.invalidateQueries(["modalities"])` and `removeQueries(["modality", name])`. Mock
-   the action, assert on a shared `QueryClient` instance's cache methods.
-  <!-- roadmap-id: 32405a92 -->
-
 - [ ] **Add `src/features/settings/hooks/use-save-modality.test.ts` for `src/features/settings/hooks/use-save-modality.ts` (20 lines, 0% coverage, no test file exists).**
    A `useMutation` wrapper around `saveModalityAction` (already tested at the action layer by
    `src/actions/saveModality.test.ts`) with two `invalidateQueries` calls in `onSuccess`. Same pattern as
@@ -120,6 +113,15 @@ that larger surface.
   <!-- roadmap-id: d4b21d3d -->
 
 ## Completed
+
+<!-- completed: 2026-07-22 -->
+- [x] **Add `src/features/settings/hooks/use-delete-modality.test.ts` for `src/features/settings/hooks/use-delete-modality.ts` (13 lines, 0% coverage, no test file exists).**
+   A `useMutation` wrapper around `deleteModalityAction` (already tested at the action layer by
+   `src/actions/deleteModality.test.ts`) whose own untested logic is the `onSuccess` cache-invalidation —
+   it calls `queryClient.invalidateQueries(["modalities"])` and `removeQueries(["modality", name])`. Mock
+   the action, assert on a shared `QueryClient` instance's cache methods.
+  <!-- roadmap-id: 32405a92 -->
+
 
 <!-- completed: 2026-07-21 -->
 - [x] **Add `src/features/settings/hooks/use-modality-config.test.ts` for `src/features/settings/hooks/use-modality-config.ts` (10 lines, 0% coverage, no test file exists).**
