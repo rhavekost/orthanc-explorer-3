@@ -30,13 +30,6 @@ that larger surface.
 
 ## Next
 
-- [ ] **Add `src/shared/hooks/use-tab-label.test.tsx` for `src/shared/hooks/use-tab-label.ts` (20 lines, 0% coverage, no test file exists).**
-   Updates a tab's label in `src/store/tab-store.ts` when the current route matches an open tab.
-   `renderHook` with a `MemoryRouter` wrapper (needed for `useLocation`), seed `useTabStore`'s state
-   directly via `setState` (same store-seeding approach as `src/store/sessionStore.test.ts`), and assert
-   `updateTabLabel` is called only when the label actually changes.
-  <!-- roadmap-id: 8e1aca7e -->
-
 - [ ] **Add `src/hooks/use-mobile.test.tsx` for `src/hooks/use-mobile.tsx` (19 lines, 0% coverage, no test file exists).**
    Reads `window.matchMedia` and listens for viewport-width changes. `renderHook`, stub
    `window.matchMedia` (jsdom does not implement it) with a minimal mock exposing `addEventListener`/
@@ -88,6 +81,15 @@ that larger surface.
   <!-- roadmap-id: d4b21d3d -->
 
 ## Completed
+
+<!-- completed: 2026-07-22 -->
+- [x] **Add `src/shared/hooks/use-tab-label.test.tsx` for `src/shared/hooks/use-tab-label.ts` (20 lines, 0% coverage, no test file exists).**
+   Updates a tab's label in `src/store/tab-store.ts` when the current route matches an open tab.
+   `renderHook` with a `MemoryRouter` wrapper (needed for `useLocation`), seed `useTabStore`'s state
+   directly via `setState` (same store-seeding approach as `src/store/sessionStore.test.ts`), and assert
+   `updateTabLabel` is called only when the label actually changes.
+  <!-- roadmap-id: 8e1aca7e -->
+
 
 <!-- completed: 2026-07-22 -->
 - [x] **Add `src/shared/api/repository-factory.test.ts` for `src/shared/api/repository-factory.ts` (26 lines, 0% coverage, no test file exists).**
