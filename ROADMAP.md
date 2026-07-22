@@ -30,13 +30,6 @@ that larger surface.
 
 ## Next
 
-- [ ] **Add `src/shared/api/repository-factory.test.ts` for `src/shared/api/repository-factory.ts` (26 lines, 0% coverage, no test file exists).**
-   `RepositoryFactory.createStudyRepository()` (memoizes a singleton) and `setUseDemoData()` (resets the
-   singleton so the next call re-creates it). Mock `OrthancStudyRepository` and `DemoStudyRepository`
-   constructors via `vi.mock` so the test exercises only the factory's own branching, not the repositories'
-   internals. Follow `src/lib/errors.test.ts`'s pure-class-logic pattern.
-  <!-- roadmap-id: 06d6a52f -->
-
 - [ ] **Add `src/shared/hooks/use-tab-label.test.tsx` for `src/shared/hooks/use-tab-label.ts` (20 lines, 0% coverage, no test file exists).**
    Updates a tab's label in `src/store/tab-store.ts` when the current route matches an open tab.
    `renderHook` with a `MemoryRouter` wrapper (needed for `useLocation`), seed `useTabStore`'s state
@@ -95,6 +88,15 @@ that larger surface.
   <!-- roadmap-id: d4b21d3d -->
 
 ## Completed
+
+<!-- completed: 2026-07-22 -->
+- [x] **Add `src/shared/api/repository-factory.test.ts` for `src/shared/api/repository-factory.ts` (26 lines, 0% coverage, no test file exists).**
+   `RepositoryFactory.createStudyRepository()` (memoizes a singleton) and `setUseDemoData()` (resets the
+   singleton so the next call re-creates it). Mock `OrthancStudyRepository` and `DemoStudyRepository`
+   constructors via `vi.mock` so the test exercises only the factory's own branching, not the repositories'
+   internals. Follow `src/lib/errors.test.ts`'s pure-class-logic pattern.
+  <!-- roadmap-id: 06d6a52f -->
+
 
 <!-- completed: 2026-07-22 -->
 - [x] **Add `src/shared/utils/format.test.ts` for `src/shared/utils/format.ts` (31 lines, 0% coverage, no test file exists).**
