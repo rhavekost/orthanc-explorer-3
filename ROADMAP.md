@@ -30,12 +30,6 @@ that larger surface.
 
 ## Next
 
-- [ ] **Extend `src/features/settings/components/ModalitiesTab.test.tsx` (currently 55 lines) to raise coverage of the already-tested component.**
-   Currently 79.74% statements / 33.33% functions, with lines 139-247 and 318-319 uncovered.
-   Add test cases for the currently-unexercised interaction paths in the existing test file,
-   following its existing `@testing-library/react` render + `userEvent` pattern.
-  <!-- roadmap-id: 3533c28e -->
-
 - [ ] **Add `src/features/settings/hooks/use-save-modality.test.ts` for `src/features/settings/hooks/use-save-modality.ts` (20 lines, 0% coverage, no test file exists).**
    A `useMutation` wrapper around `saveModalityAction` (already tested at the action layer by
    `src/actions/saveModality.test.ts`) with two `invalidateQueries` calls in `onSuccess`. Same pattern as
@@ -113,6 +107,14 @@ that larger surface.
   <!-- roadmap-id: d4b21d3d -->
 
 ## Completed
+
+<!-- completed: 2026-07-22 -->
+- [x] **Extend `src/features/settings/components/ModalitiesTab.test.tsx` (currently 55 lines) to raise coverage of the already-tested component.**
+   Currently 79.74% statements / 33.33% functions, with lines 139-247 and 318-319 uncovered.
+   Add test cases for the currently-unexercised interaction paths in the existing test file,
+   following its existing `@testing-library/react` render + `userEvent` pattern.
+  <!-- roadmap-id: 3533c28e -->
+
 
 <!-- completed: 2026-07-22 -->
 - [x] **Add `src/features/settings/hooks/use-delete-modality.test.ts` for `src/features/settings/hooks/use-delete-modality.ts` (13 lines, 0% coverage, no test file exists).**
