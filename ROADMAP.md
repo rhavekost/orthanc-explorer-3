@@ -30,12 +30,6 @@ that larger surface.
 
 ## Next
 
-- [ ] **Add `src/shared/utils/format.test.ts` for `src/shared/utils/format.ts` (31 lines, 0% coverage, no test file exists).**
-   Four pure formatting functions (`formatPatientName`, `formatDiskSize`, `formatDuration`,
-   `formatRelativeTime`) with several unexercised size/duration thresholds each. No React/DOM
-   dependencies. Follow the pattern in `src/lib/dicom-tag-utils.test.ts` (colocated, no mocks needed).
-  <!-- roadmap-id: 4ee5992f -->
-
 - [ ] **Add `src/shared/api/repository-factory.test.ts` for `src/shared/api/repository-factory.ts` (26 lines, 0% coverage, no test file exists).**
    `RepositoryFactory.createStudyRepository()` (memoizes a singleton) and `setUseDemoData()` (resets the
    singleton so the next call re-creates it). Mock `OrthancStudyRepository` and `DemoStudyRepository`
@@ -101,6 +95,14 @@ that larger surface.
   <!-- roadmap-id: d4b21d3d -->
 
 ## Completed
+
+<!-- completed: 2026-07-22 -->
+- [x] **Add `src/shared/utils/format.test.ts` for `src/shared/utils/format.ts` (31 lines, 0% coverage, no test file exists).**
+   Four pure formatting functions (`formatPatientName`, `formatDiskSize`, `formatDuration`,
+   `formatRelativeTime`) with several unexercised size/duration thresholds each. No React/DOM
+   dependencies. Follow the pattern in `src/lib/dicom-tag-utils.test.ts` (colocated, no mocks needed).
+  <!-- roadmap-id: 4ee5992f -->
+
 
 <!-- completed: 2026-07-22 -->
 - [x] **Add `src/features/settings/hooks/use-save-modality.test.ts` for `src/features/settings/hooks/use-save-modality.ts` (20 lines, 0% coverage, no test file exists).**
