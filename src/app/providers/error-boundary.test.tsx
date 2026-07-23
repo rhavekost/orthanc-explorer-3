@@ -65,8 +65,9 @@ describe('ErrorBoundary', () => {
     expect(screen.getByText('Something went wrong')).toBeInTheDocument();
 
     shouldThrow = false;
-    fireEvent.click(screen.getByRole('button', { name: /try again/i }));
+    // Update the existing boundary props before resetting so the retry renders non-throwing children.
     rerender(<TestWrapper />);
+    fireEvent.click(screen.getByRole('button', { name: /try again/i }));
 
     expect(screen.getByText('Normal Content')).toBeInTheDocument();
   });
