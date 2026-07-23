@@ -38,12 +38,6 @@ that larger surface.
     (e.g. `HealthBanner.test.tsx`'s render-and-assert style).
   <!-- roadmap-id: 4c4d5a88 -->
 
-- [ ] **Add `src/pages/NotFound.test.tsx` for `src/pages/NotFound.tsx` (24 lines, 0% coverage, no test file exists).**
-   The live 404 page (wired up in `src/App.tsx`'s catch-all route) — render-and-assert on the heading
-   text and the "Return to Home" link. Note: `src/app/router/NotFound.tsx` is a byte-for-byte duplicate
-   that is never imported anywhere; this item targets only the file actually reachable from the app.
-  <!-- roadmap-id: e4c508d9 -->
-
 - [ ] **Add `src/features/audit/hooks/use-audit-log.test.ts` for `src/features/audit/hooks/use-audit-log.ts` (38 lines, 0% coverage, no test file exists).**
    Wraps `useAuditStore`'s `log` action with fixed metadata (actor, IP, truncated user agent).
    `renderHook` and mock/spy on `useAuditStore` (same store-mocking approach as
@@ -69,6 +63,14 @@ that larger surface.
   <!-- roadmap-id: d4b21d3d -->
 
 ## Completed
+
+<!-- completed: 2026-07-23 -->
+- [x] **Add `src/pages/NotFound.test.tsx` for `src/pages/NotFound.tsx` (24 lines, 0% coverage, no test file exists).**
+   The live 404 page (wired up in `src/App.tsx`'s catch-all route) — render-and-assert on the heading
+   text and the "Return to Home" link. Note: `src/app/router/NotFound.tsx` is a byte-for-byte duplicate
+   that is never imported anywhere; this item targets only the file actually reachable from the app.
+  <!-- roadmap-id: e4c508d9 -->
+
 
 <!-- completed: 2026-07-23 -->
 - [x] **Add tests for the two uncovered branches in `src/lib/client.ts` (currently 88.13% statements / 77.27% branches).**
