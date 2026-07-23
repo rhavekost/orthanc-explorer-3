@@ -32,12 +32,6 @@ that larger surface.
 
 ## Later
 
-- [ ] **Add tests for the two uncovered branches in `src/lib/client.ts` (currently 88.13% statements / 77.27% branches).**
-    Lines 28-31 and 34-36 are uncovered — both are error-handling branches in the central HTTP
-    client already exercised at a high level by `src/lib/client.test.ts`. Extend that file rather
-    than creating a new one.
-  <!-- roadmap-id: 907ebbe1 -->
-
 - [ ] **Add a branch-coverage test to `src/shared/components/ModalityBadge.tsx`'s existing coverage (currently 91.3% statements / 37.5% branches).**
     Lines 25-26 uncovered — a small presentational component with only one untested conditional
     path. Low effort, follows any existing component-test pattern in `src/shared/components/`
@@ -75,6 +69,14 @@ that larger surface.
   <!-- roadmap-id: d4b21d3d -->
 
 ## Completed
+
+<!-- completed: 2026-07-23 -->
+- [x] **Add tests for the two uncovered branches in `src/lib/client.ts` (currently 88.13% statements / 77.27% branches).**
+    Lines 28-31 and 34-36 are uncovered — both are error-handling branches in the central HTTP
+    client already exercised at a high level by `src/lib/client.test.ts`. Extend that file rather
+    than creating a new one.
+  <!-- roadmap-id: 907ebbe1 -->
+
 
 <!-- completed: 2026-07-22 -->
 - [x] **Add `src/hooks/use-mobile.test.tsx` for `src/hooks/use-mobile.tsx` (19 lines, 0% coverage, no test file exists).**
