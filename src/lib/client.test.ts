@@ -80,6 +80,27 @@ describe("orthancFetch", () => {
     }));
   });
 
+  it("throws logged OrthancError for non-2xx responses without double-counting the failure", async () => {
+    const sink = vi.fn();
+    __setLoggerSinkForTests(sink);
+    vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response("unavailable", { status: 503 }));
+
+    await expect(orthancFetch("/instances/unavailable")).rejects.toMatchObject({
+      status: 503,
+      message: "Service temporarily unavailable.",
+    });
+    expect(healthTracker.getState().consecutiveFailures).toBe(1);
+    expect(sink).toHaveBeenCalledWith(expect.objectContaining({
+      level: "error",
+      event: "orthanc.fetch.failed",
+      fields: expect.objectContaining({
+        path: "/instances/unavailable",
+        status: 503,
+        correlationId: expect.stringMatching(/^[0-9a-f-]{36}$/),
+      }),
+    }));
+  });
+
   it("records health on success and failure", async () => {
     vi.spyOn(globalThis, "fetch")
       .mockResolvedValueOnce(new Response("{}", { status: 200 }))
@@ -94,9 +115,22 @@ describe("orthancFetch", () => {
   });
 
   it("records failure and rethrows on network error", async () => {
+    const sink = vi.fn();
+    __setLoggerSinkForTests(sink);
+    const recordFailureSpy = vi.spyOn(healthTracker, "recordFailure");
     vi.spyOn(globalThis, "fetch").mockRejectedValue(new TypeError("Failed to fetch"));
+
     await expect(orthancFetch("/system")).rejects.toBeInstanceOf(TypeError);
-    expect(healthTracker.getState().consecutiveFailures).toBeGreaterThan(0);
+    expect(recordFailureSpy).toHaveBeenCalledOnce();
+    expect(healthTracker.getState().consecutiveFailures).toBe(1);
+    expect(sink).toHaveBeenCalledWith(expect.objectContaining({
+      level: "error",
+      event: "orthanc.fetch.failed",
+      fields: expect.objectContaining({
+        path: "/system",
+        correlationId: expect.stringMatching(/^[0-9a-f-]{36}$/),
+      }),
+    }));
   });
 
   it("returns Blob when responseType is blob", async () => {
