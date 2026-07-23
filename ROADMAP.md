@@ -38,13 +38,6 @@ that larger surface.
     (e.g. `HealthBanner.test.tsx`'s render-and-assert style).
   <!-- roadmap-id: 4c4d5a88 -->
 
-- [ ] **Add `src/features/audit/hooks/use-audit-log.test.ts` for `src/features/audit/hooks/use-audit-log.ts` (38 lines, 0% coverage, no test file exists).**
-   Wraps `useAuditStore`'s `log` action with fixed metadata (actor, IP, truncated user agent).
-   `renderHook` and mock/spy on `useAuditStore` (same store-mocking approach as
-   `src/features/tasks/hooks/use-anonymize-job.test.ts` uses for `useJobStore`), asserting the shape
-   passed to `log()` including the default `severity: 'info'`.
-  <!-- roadmap-id: 5e8adfaf -->
-
 - [ ] **Add `src/app/providers/error-boundary.test.tsx` for `src/app/providers/error-boundary.tsx` (73 lines, 0% coverage, no test file exists).**
    The app's top-level error boundary — `getDerivedStateFromError` sets error state, `render()` shows
    a fallback UI (or a custom `fallback` prop) with a "Try Again" reset button. Render a component that
@@ -63,6 +56,15 @@ that larger surface.
   <!-- roadmap-id: d4b21d3d -->
 
 ## Completed
+
+<!-- completed: 2026-07-23 -->
+- [x] **Add `src/features/audit/hooks/use-audit-log.test.ts` for `src/features/audit/hooks/use-audit-log.ts` (38 lines, 0% coverage, no test file exists).**
+   Wraps `useAuditStore`'s `log` action with fixed metadata (actor, IP, truncated user agent).
+   `renderHook` and mock/spy on `useAuditStore` (same store-mocking approach as
+   `src/features/tasks/hooks/use-anonymize-job.test.ts` uses for `useJobStore`), asserting the shape
+   passed to `log()` including the default `severity: 'info'`.
+  <!-- roadmap-id: 5e8adfaf -->
+
 
 <!-- completed: 2026-07-23 -->
 - [x] **Add `src/pages/NotFound.test.tsx` for `src/pages/NotFound.tsx` (24 lines, 0% coverage, no test file exists).**
