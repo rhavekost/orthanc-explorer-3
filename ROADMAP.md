@@ -35,6 +35,7 @@ that larger surface.
     each filename finds zero non-self importers for both. Same pattern as the already-completed
     `activity-ui-store.ts`/`audit-store.ts` dead-duplicate cleanups on this board (roadmap-ids
     `a767c06c`, `22eefdb6`). Delete both files; re-confirm zero importers before deleting.
+  <!-- roadmap-id: ec6c8ca1 -->
 
 - [ ] **Remove the dead `src/app/router/NotFound.tsx`.** Grounding: already flagged as an
     unreachable byte-for-byte duplicate of the live `src/pages/NotFound.tsx` by the completed
@@ -42,12 +43,14 @@ that larger surface.
     that is never imported anywhere") — but the file itself was never deleted; it still exists
     today and a fresh grep confirms zero importers. `src/app/router/` has no other files, so the
     now-empty directory can be removed too.
+  <!-- roadmap-id: aceb5c6d -->
 
 - [ ] **Remove the dead re-export shim `src/components/ui/use-toast.ts`.** Grounding: this file
     is a single-line re-export (`export { useToast, toast } from "@/hooks/use-toast"`); a
     full-repo grep for `@/components/ui/use-toast` finds zero importers anywhere in `src/` — the
     real consumers (e.g. `src/components/ui/toaster.tsx`) import directly from
     `@/hooks/use-toast` instead. Pure dead-code deletion; re-verify zero importers before removing.
+  <!-- roadmap-id: 9f09ad87 -->
 
 - [ ] **Remove the dead, superseded `src/actions/uploadInstances.ts` (and its test).** Grounding:
     `uploadInstancesAction` has zero callers in `src/` outside its own `uploadInstances.test.ts`.
@@ -57,6 +60,7 @@ that larger surface.
     `uploadInstancesAction` lacks — it is the one actually wired up. Confirm no other importers
     exist, then delete `src/actions/uploadInstances.ts` and `src/actions/uploadInstances.test.ts`
     together.
+  <!-- roadmap-id: 02105525 -->
 
 - [ ] **Fix the no-op "Add/Edit DICOMweb Server" save in
     `src/features/settings/pages/SettingsPage.tsx`.** Grounding: `AddServerDialog`'s `onSave`
@@ -68,6 +72,7 @@ that larger surface.
     `src/features/settings/hooks/use-save-modality.ts`'s pattern exactly (call
     `dicomWebServersApi.put`, invalidate the `["dicom-web-servers"]` query on success) — and wire
     it into this `onSave` handler in place of the fake toast.
+  <!-- roadmap-id: 93fcaef0 -->
 
 - [ ] **Fix the dead "Delete" button for DICOMweb servers in
     `src/features/settings/components/DicomWebTab.tsx`.** Grounding: lines 207-213 render a
@@ -78,6 +83,7 @@ that larger surface.
     `src/features/settings/hooks/use-delete-modality.ts`'s pattern, and wire it to this button —
     follow the existing `AlertDialog` delete-confirmation pattern already used for modality
     deletion in `src/features/settings/components/ModalitiesTab.tsx`.
+  <!-- roadmap-id: 0b83edb9 -->
 
 - [ ] **Add UI for adding/removing study labels — the backend action exists and is tested, but
     has zero UI entry point.** Grounding: `src/actions/studyLabel.ts`'s `addLabelAction`/
@@ -91,6 +97,7 @@ that larger surface.
     Add a minimal add/remove UI to that card (e.g. a text input + "Add" button, and a remove
     affordance on each badge) that calls `addLabelAction`/`removeLabelAction` and invalidates the
     study query on success.
+  <!-- roadmap-id: a7de3d29 -->
 
 - [ ] **Fix always-disconnected modality status in
     `src/features/servers/pages/RemoteSourcesPage.tsx`.** Grounding: `useModalities()`
@@ -104,6 +111,7 @@ that larger surface.
     identical problem correctly by calling `useModalityConfig(name)` per row for live
     per-modality echo status — follow that same pattern here to populate real
     `lastEchoStatus`/`lastEcho` values.
+  <!-- roadmap-id: cd67767c -->
 
 - [ ] **Investigate the two parallel, entirely-unused authorization systems in `src/`, then gate
     the four unconditional destructive-action buttons in
@@ -126,6 +134,7 @@ that larger surface.
       `EmbeddedThemingCard.tsx`'s SMART-on-FHIR theming card, itself not yet connected to
       anything), which it currently isn't. Absent a clearer signal in the code, prefer wrapping
       the four buttons in `PermissionGuard` with their matching `Permission` value.
+  <!-- roadmap-id: b4ac1291 -->
 
 ## Next
 
