@@ -20,9 +20,31 @@ const PEEK_SIZE = DICOM_MAGIC_OFFSET + DICOM_MAGIC.length; // 132 bytes
  */
 export async function hasDicomMagicBytes(file: File): Promise<boolean> {
   if (file.size < PEEK_SIZE) return false;
-  const buffer = await file.slice(0, PEEK_SIZE).arrayBuffer();
+  const buffer = await readBlobArrayBuffer(file.slice(0, PEEK_SIZE));
   const bytes = new Uint8Array(buffer);
   return DICOM_MAGIC.every((byte, i) => bytes[DICOM_MAGIC_OFFSET + i] === byte);
+}
+
+function readBlobArrayBuffer(blob: Blob): Promise<ArrayBuffer> {
+  if (typeof blob.arrayBuffer === 'function') {
+    return blob.arrayBuffer();
+  }
+
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onerror = () => reject(reader.error ?? new Error('Failed to read DICOM header.'));
+    reader.onload = () => {
+      if (reader.result instanceof ArrayBuffer) {
+        resolve(reader.result);
+        return;
+      }
+
+      reject(new Error('Failed to read DICOM header.'));
+    };
+
+    reader.readAsArrayBuffer(blob);
+  });
 }
 
 /**

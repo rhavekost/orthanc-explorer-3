@@ -5,7 +5,7 @@
  */
 
 import { createContext, useContext, useCallback, type ReactNode } from 'react';
-import { useJobStore } from '@/features/tasks/store/job-store';
+import { useJobStore } from '@/store/job-store';
 import type { Job, JobType, JobStatus } from '@/shared/types/job';
 
 export interface TaskContextValue {

@@ -1,0 +1,13 @@
+SCRATCH=$(mktemp -d)
+trap 'rm -rf "$SCRATCH"' EXIT
+cp -a ./. "$SCRATCH"/
+cd "$SCRATCH"
+export HOME="$SCRATCH"  # npm writes cache/logs under $HOME/.npm; hermes-verify has no writable
+                        # home dir (EACCES on /home/hermes-verify) -- redirect it into the scratch
+                        # copy, same rationale as the scratch copy itself. Confirmed no .npmrc in
+                        # this repo needing the real $HOME (2026-07-19).
+npm install --no-audit --no-fund
+npm run lint
+npx tsc --noEmit
+npm run test
+npm run build

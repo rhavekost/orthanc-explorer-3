@@ -3,6 +3,7 @@ import { orthancFetch } from "@/lib/client";
 import { loadConfig, __resetConfigForTests } from "@/config/runtime";
 import { healthTracker } from "./health";
 import { OrthancError } from "./errors";
+import { __resetLoggerSinkForTests, __setLoggerSinkForTests } from "./logger";
 
 const setCfg = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -14,7 +15,7 @@ const setCfg = () => {
 
 describe("orthancFetch", () => {
   beforeEach(() => { setCfg(); healthTracker.reset(); });
-  afterEach(() => { __resetConfigForTests(); vi.restoreAllMocks(); });
+  afterEach(() => { __resetConfigForTests(); __resetLoggerSinkForTests(); vi.restoreAllMocks(); });
 
   it("prepends orthancUrl and attaches correlation id", async () => {
     const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue(
@@ -47,6 +48,59 @@ describe("orthancFetch", () => {
     await expect(orthancFetch("/system")).rejects.toBeInstanceOf(OrthancError);
   });
 
+  it("throws OrthancError and logs status for 404 responses", async () => {
+    const sink = vi.fn();
+    __setLoggerSinkForTests(sink);
+    vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response("not found", { status: 404 }));
+
+    await expect(orthancFetch("/some-path")).rejects.toMatchObject({
+      status: 404,
+      message: "The requested resource was not found.",
+    });
+    expect(sink).toHaveBeenCalledWith(expect.objectContaining({
+      level: "error",
+      event: "orthanc.fetch.failed",
+      fields: expect.objectContaining({ path: "/some-path", status: 404 }),
+    }));
+  });
+
+  it("throws OrthancError and logs status for 500 responses", async () => {
+    const sink = vi.fn();
+    __setLoggerSinkForTests(sink);
+    vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response("server error", { status: 500 }));
+
+    await expect(orthancFetch("/some-path")).rejects.toMatchObject({
+      status: 500,
+      message: "The server encountered an error.",
+    });
+    expect(sink).toHaveBeenCalledWith(expect.objectContaining({
+      level: "error",
+      event: "orthanc.fetch.failed",
+      fields: expect.objectContaining({ path: "/some-path", status: 500 }),
+    }));
+  });
+
+  it("throws logged OrthancError for non-2xx responses without double-counting the failure", async () => {
+    const sink = vi.fn();
+    __setLoggerSinkForTests(sink);
+    vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response("unavailable", { status: 503 }));
+
+    await expect(orthancFetch("/instances/unavailable")).rejects.toMatchObject({
+      status: 503,
+      message: "Service temporarily unavailable.",
+    });
+    expect(healthTracker.getState().consecutiveFailures).toBe(1);
+    expect(sink).toHaveBeenCalledWith(expect.objectContaining({
+      level: "error",
+      event: "orthanc.fetch.failed",
+      fields: expect.objectContaining({
+        path: "/instances/unavailable",
+        status: 503,
+        correlationId: expect.stringMatching(/^[0-9a-f-]{36}$/),
+      }),
+    }));
+  });
+
   it("records health on success and failure", async () => {
     vi.spyOn(globalThis, "fetch")
       .mockResolvedValueOnce(new Response("{}", { status: 200 }))
@@ -61,9 +115,22 @@ describe("orthancFetch", () => {
   });
 
   it("records failure and rethrows on network error", async () => {
+    const sink = vi.fn();
+    __setLoggerSinkForTests(sink);
+    const recordFailureSpy = vi.spyOn(healthTracker, "recordFailure");
     vi.spyOn(globalThis, "fetch").mockRejectedValue(new TypeError("Failed to fetch"));
+
     await expect(orthancFetch("/system")).rejects.toBeInstanceOf(TypeError);
-    expect(healthTracker.getState().consecutiveFailures).toBeGreaterThan(0);
+    expect(recordFailureSpy).toHaveBeenCalledOnce();
+    expect(healthTracker.getState().consecutiveFailures).toBe(1);
+    expect(sink).toHaveBeenCalledWith(expect.objectContaining({
+      level: "error",
+      event: "orthanc.fetch.failed",
+      fields: expect.objectContaining({
+        path: "/system",
+        correlationId: expect.stringMatching(/^[0-9a-f-]{36}$/),
+      }),
+    }));
   });
 
   it("returns Blob when responseType is blob", async () => {
