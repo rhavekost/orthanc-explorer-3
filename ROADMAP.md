@@ -37,14 +37,6 @@ that larger surface.
     `a767c06c`, `22eefdb6`). Delete both files; re-confirm zero importers before deleting.
   <!-- roadmap-id: ec6c8ca1 -->
 
-- [ ] **Remove the dead `src/app/router/NotFound.tsx`.** Grounding: already flagged as an
-    unreachable byte-for-byte duplicate of the live `src/pages/NotFound.tsx` by the completed
-    roadmap item `e4c508d9` ("Note: `src/app/router/NotFound.tsx` is a byte-for-byte duplicate
-    that is never imported anywhere") — but the file itself was never deleted; it still exists
-    today and a fresh grep confirms zero importers. `src/app/router/` has no other files, so the
-    now-empty directory can be removed too.
-  <!-- roadmap-id: aceb5c6d -->
-
 - [ ] **Remove the dead re-export shim `src/components/ui/use-toast.ts`.** Grounding: this file
     is a single-line re-export (`export { useToast, toast } from "@/hooks/use-toast"`); a
     full-repo grep for `@/components/ui/use-toast` finds zero importers anywhere in `src/` — the
@@ -164,6 +156,16 @@ that larger surface.
   <!-- roadmap-id: d4b21d3d -->
 
 ## Completed
+
+<!-- completed: 2026-07-24 -->
+- [x] **Remove the dead `src/app/router/NotFound.tsx`.** Grounding: already flagged as an
+    unreachable byte-for-byte duplicate of the live `src/pages/NotFound.tsx` by the completed
+    roadmap item `e4c508d9` ("Note: `src/app/router/NotFound.tsx` is a byte-for-byte duplicate
+    that is never imported anywhere") — but the file itself was never deleted; it still exists
+    today and a fresh grep confirms zero importers. `src/app/router/` has no other files, so the
+    now-empty directory can be removed too.
+  <!-- roadmap-id: aceb5c6d -->
+
 
 <!-- completed: 2026-07-23 -->
 - [x] **Add `src/features/audit/hooks/use-audit-log.test.ts` for `src/features/audit/hooks/use-audit-log.ts` (38 lines, 0% coverage, no test file exists).**
