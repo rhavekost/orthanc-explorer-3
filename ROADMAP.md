@@ -37,13 +37,6 @@ that larger surface.
     `a767c06c`, `22eefdb6`). Delete both files; re-confirm zero importers before deleting.
   <!-- roadmap-id: ec6c8ca1 -->
 
-- [ ] **Remove the dead re-export shim `src/components/ui/use-toast.ts`.** Grounding: this file
-    is a single-line re-export (`export { useToast, toast } from "@/hooks/use-toast"`); a
-    full-repo grep for `@/components/ui/use-toast` finds zero importers anywhere in `src/` — the
-    real consumers (e.g. `src/components/ui/toaster.tsx`) import directly from
-    `@/hooks/use-toast` instead. Pure dead-code deletion; re-verify zero importers before removing.
-  <!-- roadmap-id: 9f09ad87 -->
-
 - [ ] **Remove the dead, superseded `src/actions/uploadInstances.ts` (and its test).** Grounding:
     `uploadInstancesAction` has zero callers in `src/` outside its own `uploadInstances.test.ts`.
     The app's real upload flow (`src/features/upload/pages/UploadPage.tsx` → `useUploadStore` →
@@ -156,6 +149,15 @@ that larger surface.
   <!-- roadmap-id: d4b21d3d -->
 
 ## Completed
+
+<!-- completed: 2026-07-24 -->
+- [x] **Remove the dead re-export shim `src/components/ui/use-toast.ts`.** Grounding: this file
+    is a single-line re-export (`export { useToast, toast } from "@/hooks/use-toast"`); a
+    full-repo grep for `@/components/ui/use-toast` finds zero importers anywhere in `src/` — the
+    real consumers (e.g. `src/components/ui/toaster.tsx`) import directly from
+    `@/hooks/use-toast` instead. Pure dead-code deletion; re-verify zero importers before removing.
+  <!-- roadmap-id: 9f09ad87 -->
+
 
 <!-- completed: 2026-07-24 -->
 - [x] **Remove the dead `src/app/router/NotFound.tsx`.** Grounding: already flagged as an
