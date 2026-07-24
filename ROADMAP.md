@@ -28,6 +28,105 @@ that larger surface.
 
 ## Now
 
+- [ ] **Remove two dead, unimported "legacy-check" type duplicate files.** Grounding:
+    `src/shared/types/activity-legacy-check.ts` and `src/shared/types/job-legacy-check.ts` are
+    byte-for-byte duplicates of the live, barrel-exported `src/shared/types/activity.ts` and
+    `src/shared/types/job.ts` (re-exported via `src/shared/types/index.ts`). A full-repo grep for
+    each filename finds zero non-self importers for both. Same pattern as the already-completed
+    `activity-ui-store.ts`/`audit-store.ts` dead-duplicate cleanups on this board (roadmap-ids
+    `a767c06c`, `22eefdb6`). Delete both files; re-confirm zero importers before deleting.
+
+- [ ] **Remove the dead `src/app/router/NotFound.tsx`.** Grounding: already flagged as an
+    unreachable byte-for-byte duplicate of the live `src/pages/NotFound.tsx` by the completed
+    roadmap item `e4c508d9` ("Note: `src/app/router/NotFound.tsx` is a byte-for-byte duplicate
+    that is never imported anywhere") — but the file itself was never deleted; it still exists
+    today and a fresh grep confirms zero importers. `src/app/router/` has no other files, so the
+    now-empty directory can be removed too.
+
+- [ ] **Remove the dead re-export shim `src/components/ui/use-toast.ts`.** Grounding: this file
+    is a single-line re-export (`export { useToast, toast } from "@/hooks/use-toast"`); a
+    full-repo grep for `@/components/ui/use-toast` finds zero importers anywhere in `src/` — the
+    real consumers (e.g. `src/components/ui/toaster.tsx`) import directly from
+    `@/hooks/use-toast` instead. Pure dead-code deletion; re-verify zero importers before removing.
+
+- [ ] **Remove the dead, superseded `src/actions/uploadInstances.ts` (and its test).** Grounding:
+    `uploadInstancesAction` has zero callers in `src/` outside its own `uploadInstances.test.ts`.
+    The app's real upload flow (`src/features/upload/pages/UploadPage.tsx` → `useUploadStore` →
+    `src/store/upload-store.ts`'s `runUpload`, lines 20-60) independently re-implements upload +
+    audit emission, plus progress tracking and DICOM-magic-byte validation that
+    `uploadInstancesAction` lacks — it is the one actually wired up. Confirm no other importers
+    exist, then delete `src/actions/uploadInstances.ts` and `src/actions/uploadInstances.test.ts`
+    together.
+
+- [ ] **Fix the no-op "Add/Edit DICOMweb Server" save in
+    `src/features/settings/pages/SettingsPage.tsx`.** Grounding: `AddServerDialog`'s `onSave`
+    handler (lines 314-318) only calls `toast.success(...)` and closes the dialog — it never
+    calls any API, so an added/edited server vanishes on refresh. `src/api/dicomWebServers.ts`
+    already implements `dicomWebServersApi.put(name, body)` against the real Orthanc REST
+    endpoint (`PUT /dicom-web/servers/:name`) and is currently unused anywhere in `src/`. Add a
+    `useSaveDicomWebServer`-style mutation hook — follow
+    `src/features/settings/hooks/use-save-modality.ts`'s pattern exactly (call
+    `dicomWebServersApi.put`, invalidate the `["dicom-web-servers"]` query on success) — and wire
+    it into this `onSave` handler in place of the fake toast.
+
+- [ ] **Fix the dead "Delete" button for DICOMweb servers in
+    `src/features/settings/components/DicomWebTab.tsx`.** Grounding: lines 207-213 render a
+    destructive `Trash2` icon button with no `onClick` handler at all — clicking it does nothing.
+    `dicomWebServersApi.delete(name)` (`src/api/dicomWebServers.ts`) already implements
+    `DELETE /dicom-web/servers/:name` against the real API and, like `put`, is unused anywhere in
+    `src/`. Add a `useDeleteDicomWebServer`-style mutation hook following
+    `src/features/settings/hooks/use-delete-modality.ts`'s pattern, and wire it to this button —
+    follow the existing `AlertDialog` delete-confirmation pattern already used for modality
+    deletion in `src/features/settings/components/ModalitiesTab.tsx`.
+
+- [ ] **Add UI for adding/removing study labels — the backend action exists and is tested, but
+    has zero UI entry point.** Grounding: `src/actions/studyLabel.ts`'s `addLabelAction`/
+    `removeLabelAction` (audit-seam wrappers around `studiesApi.addLabel`/`removeLabel`, which
+    already has dedicated coverage from the completed roadmap item `4123a53d`) are never imported
+    by any `.tsx` file in `src/` — a full-repo grep for `addLabel`/`removeLabel` inside
+    `src/**/*.tsx` returns nothing. The only place labels appear in the UI is
+    `src/features/studies/pages/StudyDetailPage.tsx` lines 273-286 — a **read-only** card that
+    renders existing `study.labels` as badges, and is hidden entirely when a study has no labels
+    (`study.labels && study.labels.length > 0`), so there is no way to add a first label either.
+    Add a minimal add/remove UI to that card (e.g. a text input + "Add" button, and a remove
+    affordance on each badge) that calls `addLabelAction`/`removeLabelAction` and invalidates the
+    study query on success.
+
+- [ ] **Fix always-disconnected modality status in
+    `src/features/servers/pages/RemoteSourcesPage.tsx`.** Grounding: `useModalities()`
+    (`src/features/settings/hooks/use-modalities.ts`) returns only modality name strings from
+    `modalitiesApi.list()`. This page's local `modalities` array (lines 24-30) maps each name to
+    a placeholder object with no `lastEchoStatus`/`lastEcho` fields — yet the render code checks
+    `m.lastEchoStatus === 'success'` (line 77, always false, so the modality selector permanently
+    shows the `WifiOff`/disconnected icon for every modality) and reads `m.lastEcho` (line 109,
+    always undefined, so "Last echo" never renders).
+    `src/features/settings/components/ModalitiesTab.tsx`'s `ModalityTableRow` already solves the
+    identical problem correctly by calling `useModalityConfig(name)` per row for live
+    per-modality echo status — follow that same pattern here to populate real
+    `lastEchoStatus`/`lastEcho` values.
+
+- [ ] **Investigate the two parallel, entirely-unused authorization systems in `src/`, then gate
+    the four unconditional destructive-action buttons in
+    `src/features/studies/pages/StudyDetailPage.tsx` using whichever is the right fit.**
+    Grounding: (1) `src/app/providers/auth-context.tsx` exposes a full role/permission model
+    (`hasPermission`, `hasRole`, permissions like `study:send`/`study:modify`/`study:anonymize`/
+    `study:delete`) with `src/shared/components/PermissionGuard.tsx` purpose-built to consume it
+    — a full-repo grep confirms `hasPermission`/`hasRole`/`useAuth` are referenced nowhere outside
+    `auth-context.tsx` itself, its test, and the unused `PermissionGuard.tsx`. (2)
+    `src/config/features.ts` separately exposes a SMART-on-FHIR-aware `useFeature(key:
+    FeatureKey)` hook (checks app config, a `UserProfile.permissions` layer, and `SmartScopes`) —
+    a full-repo grep confirms zero usage anywhere either. Neither system gates anything today:
+    `StudyDetailPage.tsx`'s Send (line 149, `study:send`), Modify (line 150, `study:modify`),
+    Anonymize (line 151, `study:anonymize`), and Delete (lines 152-154, `study:delete`) buttons
+    all render unconditionally regardless of role or permission.
+    - Do not modify `src/app/providers/auth-context.tsx` itself (off-limits per Constraints) —
+      only consume its existing exports.
+    - `PermissionGuard` is the simpler, self-contained option; `useFeature`'s SMART-scope layer
+      only makes sense once an "embedded mode" is wired up elsewhere (see
+      `EmbeddedThemingCard.tsx`'s SMART-on-FHIR theming card, itself not yet connected to
+      anything), which it currently isn't. Absent a clearer signal in the code, prefer wrapping
+      the four buttons in `PermissionGuard` with their matching `Permission` value.
+
 ## Next
 
 ## Later
