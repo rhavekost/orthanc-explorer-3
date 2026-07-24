@@ -1,4 +1,4 @@
-export type JobType = 'upload' | 'send' | 'anonymize' | 'modify';
+
 export type JobStatus = 'pending' | 'running' | 'complete' | 'error' | 'interrupted';
 
 export interface Job {
