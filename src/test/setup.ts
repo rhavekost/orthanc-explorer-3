@@ -13,6 +13,19 @@ if (typeof Blob.prototype.arrayBuffer !== "function") {
   });
 }
 
+if (typeof Blob.prototype.stream !== "function") {
+  Object.defineProperty(Blob.prototype, "stream", {
+    value: function stream(this: Blob): ReadableStream<Uint8Array> {
+      return new ReadableStream({
+        start: async (controller) => {
+          controller.enqueue(new Uint8Array(await this.arrayBuffer()));
+          controller.close();
+        },
+      });
+    },
+  });
+}
+
 Object.defineProperty(window, "matchMedia", {
   writable: true,
   value: (query: string) => ({
