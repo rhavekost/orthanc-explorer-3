@@ -28,15 +28,6 @@ that larger surface.
 
 ## Now
 
-- [ ] **Remove two dead, unimported "legacy-check" type duplicate files.** Grounding:
-    `src/shared/types/activity-legacy-check.ts` and `src/shared/types/job-legacy-check.ts` are
-    byte-for-byte duplicates of the live, barrel-exported `src/shared/types/activity.ts` and
-    `src/shared/types/job.ts` (re-exported via `src/shared/types/index.ts`). A full-repo grep for
-    each filename finds zero non-self importers for both. Same pattern as the already-completed
-    `activity-ui-store.ts`/`audit-store.ts` dead-duplicate cleanups on this board (roadmap-ids
-    `a767c06c`, `22eefdb6`). Delete both files; re-confirm zero importers before deleting.
-  <!-- roadmap-id: ec6c8ca1 -->
-
 - [ ] **Remove the dead, superseded `src/actions/uploadInstances.ts` (and its test).** Grounding:
     `uploadInstancesAction` has zero callers in `src/` outside its own `uploadInstances.test.ts`.
     The app's real upload flow (`src/features/upload/pages/UploadPage.tsx` → `useUploadStore` →
@@ -149,6 +140,17 @@ that larger surface.
   <!-- roadmap-id: d4b21d3d -->
 
 ## Completed
+
+<!-- completed: 2026-07-24 -->
+- [x] **Remove two dead, unimported "legacy-check" type duplicate files.** Grounding:
+    `src/shared/types/activity-legacy-check.ts` and `src/shared/types/job-legacy-check.ts` are
+    byte-for-byte duplicates of the live, barrel-exported `src/shared/types/activity.ts` and
+    `src/shared/types/job.ts` (re-exported via `src/shared/types/index.ts`). A full-repo grep for
+    each filename finds zero non-self importers for both. Same pattern as the already-completed
+    `activity-ui-store.ts`/`audit-store.ts` dead-duplicate cleanups on this board (roadmap-ids
+    `a767c06c`, `22eefdb6`). Delete both files; re-confirm zero importers before deleting.
+  <!-- roadmap-id: ec6c8ca1 -->
+
 
 <!-- completed: 2026-07-24 -->
 - [x] **Remove the dead re-export shim `src/components/ui/use-toast.ts`.** Grounding: this file
